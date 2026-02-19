@@ -1,0 +1,7 @@
+# Ignore artifacts:
+build
+coverage
+
+
+# importer file from dsn lib 
+dsn.utils.js

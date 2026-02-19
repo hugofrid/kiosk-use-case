@@ -1,13 +1,17 @@
+import { Container, MantineProvider } from "@mantine/core";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Kiosk lead use case" },
+    { name: "description", content: "kiosk use case " },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <MantineProvider>
+      <Container></Container>
+    </MantineProvider>
+  );
 }
