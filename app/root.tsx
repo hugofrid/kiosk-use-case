@@ -1,15 +1,17 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
 import "@mantine/core/styles.css";
-
-import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
+import "./app.css";
 import {
   ColorSchemeScript,
   MantineProvider,
   mantineHtmlProps,
 } from "@mantine/core";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import MainLayout from "./ui/layout/mainLayout";
+import ThemeProvider from "./lib/providers/themeProvider";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" {...mantineHtmlProps}>
       <head>
@@ -20,11 +22,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <MantineProvider>
-          {children}
-          <ScrollRestoration />
-          <Scripts />
-        </MantineProvider>
+        <ThemeProvider>
+          <MainLayout>
+            <Outlet />
+          </MainLayout>
+        </ThemeProvider>
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );

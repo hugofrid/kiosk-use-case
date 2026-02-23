@@ -1,88 +1,148 @@
-# Welcome to React Router!
+# Kiosk – Lead Developer Case Study
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Welcome, and thank you for your interest in Kiosk 👋
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+This exercise is a **technical case study for a Lead Developer** position.  
+It is inspired by a real feature of our ESG/CSRD reporting product.
 
-## Features
+We are **not** looking for a “finished product at all costs”.  
+We explicitly **prioritise quality over quantity**:
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- clear architecture and trade-offs
+- readable, maintainable code
+- sensible UX
+- ability to explain your decisions
 
-## Getting Started
+It is **absolutely fine if you don’t implement everything**.  
+If you run out of time, please document what you would do next.
 
-### Installation
+## 1. Goal of the exercise
 
-Install the dependencies:
+We want to simulate a small slice of the Kiosk product:
 
-```bash
-npm install
-```
+Given a DSN file containing multiple employee-level fields, determine which DSN fields can answer which internal questions, possibly through aggregation or transformation.
+Upload the DSN, map DSN fields to internal datapoints, visualise the resulting answers, and export the result as a Word document.
 
-### Development
+Concretely, you’ll work on:
 
-Start the development server with HMR:
+1. **DSN upload**
+   - Upload a DSN file (we provide a sample CSV file in `./dsn.txt`).
+   - Parse it on the server side.
 
-```bash
-npm run dev
-```
+2. **Mapping DSN → internal datapoints**
+   - We provide a sample list of Kiosk datapoints for sections **S1–S6** in `./questions.csv`.
+   - Your task is to decide which data from the DSN can answer which question.
+   - Some answers come directly from the DSN; others require:
+     - aggregating multiple rows (e.g. counts, sums, averages)
+     - transforming data (e.g. codes, units)
+3. **Visualisation of questions & answers**
 
-Your application will be available at `http://localhost:5173`.
+   Based on the mapping, compute the answers and render them within a **form interface**.
 
-## Building for Production
+   The form should:
+   - display the list of questions,
+   - pre-fill answers when they can be derived from the DSN mapping,
+   - allow users to complete missing answers or edit pre-filled ones.
 
-Create a production build:
+   For this exercise, we expect **a single form rendered on a single page**, capable of handling:
+   - nested questions (arbitrary depth),
+   - table-like structures (or something visually close to an HTML table),
+     - a question with `content = "table"` acts as a **table container**,
+     - its related child questions represent the **rows of that table**.
 
-```bash
-npm run build
-```
+   The goal is to demonstrate how you organise and display the information, not to be 100% “business correct”.
 
-## Deployment
+4. **Export to Word**
+   - Provide an action to **export the resulting questions/answers to a Word document** (`.docx`).
+   - Basic layout is enough (title + list of questions and their values).
 
-### Docker Deployment
+Again: it is totally OK to **only partially implement some of these points**.  
+If you need to simplify the domain to focus on code quality or architecture, please do so and explain your choices.
 
-To build and run using Docker:
+## 2. Tech stack & constraints
 
-```bash
-docker build -t my-app .
+For information, our production stack is:
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+- **Node.js**
+- **Remix**
+- **TypeScript**
+- **Mantine UI**
+- **Prisma + PostgreSQL**
 
-The containerized application can be deployed to any platform that supports Docker, including:
+For this case study, please use:
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+- **React**
+- **TypeScript**
 
-### DIY Deployment
+You are free to use any libraries, tooling, framework etc you prefer<br/>
+We intentionally keep the constraints minimal so you can choose the architecture and tools that make the most sense to you.
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+## 3. Deliverables
 
-Make sure to deploy the output of `npm run build`
+Please send us:
 
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
+1.  A link to your repository (GitHub, GitLab, etc.)
+2.  This README filled in with:
+    -     how to run the project
+    - if you used AI, how you used it
+    -     what you would improve next
 
-## Styling
+## 4. What is DSN ?
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+The DSN (Déclaration Sociale Nominative) is a standardized digital declaration required by French authorities. Companies use it to regularly submit social data about their employees, such as payroll details, headcount, and other employment-related information.
 
----
+The DSN file format consists of text-based blocks identified by codes (e.g., S10.G00.00.001,'value'). These blocks contain structured data categorized by specific identifiers (rubriqueCode and codeBloc). The parsing order is crucial since each block depends on previously parsed blocks, building relationships from general entities (e.g., the company or Entreprise) down to specific ones (e.g., an establishment or Établissement).
 
-Built with ❤️ using React Router.
-# kiosk-use-case
+### Resources
+
+- [Official DSN Technical Documentation (Net-Entreprises.fr)](https://www.net-entreprises.fr/media/documentation/dsn-cahier-technique-2024.1.pdf)
+- [La Société Nouvelle DSN Parser Implementation (GitHub)](https://github.com/La-Societe-Nouvelle/LaSocieteNouvelle-METRIZ-WebApp/blob/5429f13e940e11bf6658d04993008f24026a1e26/src/components/sections/statements/modals/AssessmentDSN/DSNReader.js)
+
+## 5. Structure of questions.csv
+
+The file questions.csv contains the sample list of datapoints.
+
+Here is the columns:
+
+- id
+- question label en / question label fr
+- content
+  - defines the expected input type for this question.
+  - possible values :
+    - "number" → numeric value
+    - "text" → free-text input
+    - "enum" → selectable value from a list
+    - "table" → multi-row / multi-field structure (you may simplify this for the exercise)
+    - "" (empty) → this question does not expect a content, it is usually the title of another question
+- related question id
+  - if present, this question is logically linked to another question.
+  - typical use cases: - table rows - hierarchical visibility.
+- order
+  - suggested position of the question within its group.
+- unit
+  - indicates a measurement unit (e.g. %, €, hours).
+- enum fr / enum en
+  - Applies only when content = "enum".
+  - Contain semicolon-separated lists of possible values in French or English.
+
+### Example :
+
+| id   | question label en   | content | related question id |
+| ---- | ------------------- | ------- | ------------------- |
+| Q100 | Employee details    | table   |                     |
+| Q101 | Employee birth year | number  | Q100                |
+
+Here:
+
+- Q100 defines a table.
+- Q101 is a row of that table because they reference Q100.
+
+Example of how it could be rendered :
+
+| Employee details | Value             |
+| ---------------- | ----------------- |
+| Employee details | [input goes here] |
+
+## Questions about this case study
+
+If anything is unclear, feel free to email `sabine@meetkiosk.com` or `mathys@meetkiosk.com`.
