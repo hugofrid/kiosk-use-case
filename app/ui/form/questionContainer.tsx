@@ -1,10 +1,10 @@
+import { memo } from "react";
 import {
   isTableQuestionType,
   type QuestionType,
 } from "~/lib/feature/form/form.utils";
 import QuestionMapper from "~/lib/feature/form/questionMapper";
 import { useFormContext } from "./formContext";
-import { memo, useEffect, useMemo } from "react";
 
 const QuestionContainer = memo(({ question }: { question: QuestionType }) => {
   const { ...mainQuestion } = question;

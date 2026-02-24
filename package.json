@@ -16,6 +16,8 @@
     "@react-router/fs-routes": "^7.13.0",
     "@react-router/node": "7.12.0",
     "@react-router/serve": "7.12.0",
+    "docx": "^9.6.0",
+    "file-saver": "^2.0.5",
     "isbot": "^5.1.31",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@react-router/dev": "7.12.0",
     "@tailwindcss/vite": "^4.2.0",
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^22",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

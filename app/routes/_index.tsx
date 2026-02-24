@@ -58,17 +58,15 @@ const Index = ({ loaderData }: Route.ComponentProps) => {
     () => Object.keys(storedValues).length > 0,
     [storedValues],
   );
-  return (
-    <Container className="w-full h-full flex justify-center items-center ">
-      {!_hydrated ? (
-        <Loader />
-      ) : (
-        <FormContainer
-          questions={questions}
-          initialValues={hasStoredValues ? storedValues : initialValues}
-        />
-      )}
-    </Container>
+  return !_hydrated ? (
+    <div className="w-full h-full flex items-center justify-center">
+      <Loader />
+    </div>
+  ) : (
+    <FormContainer
+      questions={questions}
+      initialValues={hasStoredValues ? storedValues : initialValues}
+    />
   );
 };
 

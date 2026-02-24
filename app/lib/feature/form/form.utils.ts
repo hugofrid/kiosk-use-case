@@ -41,10 +41,13 @@ export type QuestionType =
   | QuestionTypeNumber
   | QuestionTypeTitle;
 
-export type FormAnswersType = Record<
-  string,
-  string | number | Record<string, string | number>[]
->;
+export type FormAnswersType = {
+  [key: string]: string | number | FormTableRow[];
+};
+
+export type FormTableRow = {
+  [key: string]: string | number;
+};
 // Guard function
 export function isEnumQuestionType(
   question: QuestionType,
