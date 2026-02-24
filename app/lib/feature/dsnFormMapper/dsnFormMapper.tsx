@@ -4,6 +4,7 @@ import type {
   QuestionTypeTable,
   QuestionTypeText,
 } from "../form/form.utils";
+import { v4 as uuidv4 } from "uuid";
 
 type MappedResponseType =
   | { type: QuestionTypeNumber["type"]; value: number }
@@ -28,6 +29,7 @@ export const dsnFormMapper: DsnFormMappingConf = {
         type: "TABLE",
         value: [
           {
+            _id: uuidv4(),
             "S1-6_02": individus.length,
           },
         ],
@@ -48,6 +50,7 @@ export const dsnFormMapper: DsnFormMappingConf = {
       return {
         type: "TABLE",
         value: Object.entries(byCountry).map(([key, individus]) => ({
+          _id: uuidv4(),
           _label: key,
           "S1-6_05": individus.length,
         })),
@@ -68,6 +71,7 @@ export const dsnFormMapper: DsnFormMappingConf = {
       return {
         type: "TABLE",
         value: Object.entries(byRegion).map(([key, individus]) => ({
+          _id: uuidv4(),
           _label: key,
           "S1-6_09": individus.length,
         })),
@@ -89,6 +93,7 @@ export const dsnFormMapper: DsnFormMappingConf = {
       return {
         type: "TABLE",
         value: Object.entries(byContractAndGender).map(([key, individus]) => ({
+          _id: uuidv4(),
           _label: key,
           K_718: individus.length,
         })),
@@ -110,6 +115,7 @@ export const dsnFormMapper: DsnFormMappingConf = {
       return {
         type: "TABLE",
         value: Object.entries(byCategory).map(([key, individus]) => ({
+          _id: uuidv4(),
           _label: key,
           "S1-6_19": individus.length,
         })),

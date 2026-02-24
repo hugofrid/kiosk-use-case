@@ -31,7 +31,7 @@ const FormContainer = memo(({ questions, initialValues }: Props) => {
 
   const debouncedSync = useDebouncedCallback(
     () => setValues(form.getValues()),
-    300, // ms
+    500,
   );
   return (
     <FormProvider form={form}>
@@ -40,11 +40,13 @@ const FormContainer = memo(({ questions, initialValues }: Props) => {
         onSubmit={form.onSubmit(submit)}
         className="w-full flex flex-col overflow-hidden flex-1  "
       >
-        <Container className="flex-1 flex flex-col max-h-full  overflow-auto p-3 gap-3">
-          {questions.map((q) => (
-            <QuestionContainer key={q.id} question={q} />
-          ))}
-        </Container>
+        <div className="flex-1  max-h-full  overflow-auto ">
+          <Container className="flex flex-col p-3 gap-4">
+            {questions.map((q) => (
+              <QuestionContainer key={q.id} question={q} />
+            ))}
+          </Container>
+        </div>
 
         <div className="p-2 flex items-center justify-center w-full">
           <Button type="submit">generer le rapport</Button>

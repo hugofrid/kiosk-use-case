@@ -19,7 +19,7 @@ const QuestionContainer = memo(({ question }: { question: QuestionType }) => {
       {question.subQuestions && !isTableQuestionType(question) && (
         <div className="pl-2 pt-2 flex flex-col gap-2 ">
           {question.subQuestions.map((sq) => {
-            return <QuestionContainer question={sq} />;
+            return <QuestionContainer key={sq.id} question={sq} />;
           })}
         </div>
       )}

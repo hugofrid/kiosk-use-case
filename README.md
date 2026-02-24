@@ -1,3 +1,42 @@
+# Projet Kios
+
+## Prérequis
+
+- [Node.js](https://nodejs.org/) v22
+- [Yarn](https://yarnpkg.com/)
+
+## Installation
+
+```bash
+yarn install
+```
+
+## Lancer le projet
+
+```bash
+yarn run dev
+```
+
+Lance le serveur de développement Remix. L'application est accessible sur [http://localhost:5173](http://localhost:5173).
+
+# Questions
+
+## if you used AI, how you used it
+
+J'ai utilisé l'IA avec Claude Anthropic afin de m'aider à accélérer sur des tâches redondantes, notamment dans la création du dsnFormMapper.
+Je fournis une version que je considère bonne et les explications des versions que je souhaite pour pouvoir répéter la tâche.
+
+## what you would improve next
+
+Dans ce projet, je ne me suis pas attardé sur ce qui pourrait être compris dans une CI/CD avec simplement un prettier. J'ajouterais donc plus de règles pour pouvoir aider au développement et à la maintenabilité du projet.
+
+Ensuite, j'intégrerais une internationalisation pour pouvoir centraliser les traductions et éviter au maximum d'avoir des textes en dur dans le code.
+
+Ma compréhension du sujet DSN me fait douter sur l'implémentation de la solution mise en place.
+
+La première question du fichier de questions sous-entend qu'une row unique permet de répondre à la question. Les questions suivantes telles que "par genre" me font penser le contraire, c'est cette hypothèse que j'ai suivie dans la réalisation de ce projet. Avec plus de connaissance, j'améliorerais ma configuration pour que cela corresponde aux besoins réels.
+Cette conception crée un grand nombre de lignes dans l'interface. Avec plus de temps je chercherais à optimiser l'UI ainsi que les composants pour améliorer encore plus les performances.
+
 # Kiosk – Lead Developer Case Study
 
 Welcome, and thank you for your interest in Kiosk 👋
