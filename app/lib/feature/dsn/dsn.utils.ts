@@ -66,12 +66,14 @@ type Contrat = {
   modaliteTemps: string;
 };
 
-type Individu = {
+export type Individu = {
   identifiant: string;
   nomFamille: string;
   nomUsage: string;
   prenoms: string;
   sexe: string;
+  codePays: string;
+  localite: string;
   identifiantTechnique: string;
   contrats: Contrat[];
   versements: Versement[];
@@ -191,6 +193,8 @@ export const DSNDataReader = (dataDSN: DataDSN): DeclarationBloc => {
         nomUsage: bloc["S21.G00.30.003"],
         prenoms: bloc["S21.G00.30.004"],
         sexe: bloc["S21.G00.30.005"],
+        codePays: bloc["S21.G00.30.011"],
+        localite: bloc["S21.G00.30.010"],
         identifiantTechnique: bloc["S21.G00.30.020"],
         contrats: [],
         versements: [],

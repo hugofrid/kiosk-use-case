@@ -41,6 +41,10 @@ export type QuestionType =
   | QuestionTypeNumber
   | QuestionTypeTitle;
 
+export type FormAnswersType = Record<
+  string,
+  string | number | Record<string, string | number>[]
+>;
 // Guard function
 export function isEnumQuestionType(
   question: QuestionType,

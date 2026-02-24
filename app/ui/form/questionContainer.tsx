@@ -1,26 +1,30 @@
-import type { QuestionType } from "~/lib/feature/form/form.utils";
+import {
+  isTableQuestionType,
+  type QuestionType,
+} from "~/lib/feature/form/form.utils";
 import QuestionMapper from "~/lib/feature/form/questionMapper";
 import { useFormContext } from "./formContext";
+import { memo, useEffect, useMemo } from "react";
 
-const QuestionContainer = ({ question }: { question: QuestionType }) => {
-  const { subQuestions, ...mainQuestion } = question;
-  const form = useFormContext();
+const QuestionContainer = memo(({ question }: { question: QuestionType }) => {
+  const { ...mainQuestion } = question;
+  const { getInputProps } = useFormContext();
 
   return (
     <div className="border border-green-900 rounded-l p-3 flex flex-col bg-white">
       <QuestionMapper
-        {...form.getInputProps(mainQuestion.id)}
+        {...getInputProps(mainQuestion.id)}
         question={mainQuestion}
       />
-      {subQuestions && (
+      {question.subQuestions && !isTableQuestionType(question) && (
         <div className="pl-2 pt-2 flex flex-col gap-2 ">
-          {subQuestions.map((sq) => {
+          {question.subQuestions.map((sq) => {
             return <QuestionContainer question={sq} />;
           })}
         </div>
       )}
     </div>
   );
-};
+});
 
 export default QuestionContainer;
